@@ -28,13 +28,13 @@ import { useDencrypt } from "use-dencrypt-effect";
 const values = ["useDencrypt", "Customizable", "React Hook", "Text Effect"];
 
 const Example = () => {
-  const { result, deEncrypt } = useDeEncrypt();
+  const { result, dencrypt } = useDencrypt();
 
   React.useEffect(() => {
     let i = 0;
 
     const action = setInterval(() => {
-      deEncrypt(values[i]);
+      dencrypt(values[i]);
 
       i = i === values.length - 1 ? 0 : i + 1;
     }, 2000);

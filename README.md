@@ -66,7 +66,9 @@ Number of miliseconds it takes for every animation step (one character).
 
 ## Other Examples
 
-![Example 1](https://github.com/crazko/use-dencrypt-effect/raw/master/docs/example1.gif)
+### One character
+
+![](https://github.com/crazko/use-dencrypt-effect/raw/master/docs/example1.gif)
 
 ```js
 const options: {
@@ -78,6 +80,10 @@ const Example = () => {
 
   // ...
 ```
+
+### Run effect on hover
+
+[Live Example](https://vojdivon.sk/) | [Source Code](https://github.com/ParalelnaPolisKE/vojdivon.sk/blob/ce04fb05212dce8323fef8fba73963544ce2eda7/src/pages/index.tsx#L69)
 
 ---
 

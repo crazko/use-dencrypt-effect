@@ -1,4 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
+
+type DencryptReturnType = {
+  result: string;
+  dencrypt: Dispatch<SetStateAction<string>>;
+};
+
+type DencryptOptions = Partial<typeof defaultOptions>;
 
 const getRandomChar = (chars: string[]) =>
   chars[Math.floor(Math.random() * chars.length)];
@@ -45,14 +52,34 @@ const defaultOptions = {
     "c",
     "d",
     "e",
-    "f"
+    "f",
   ],
-  interval: 50
+  interval: 50,
 };
 
-export const useDencrypt = (options?: Partial<typeof defaultOptions>) => {
-  const [value, setValue] = useState("");
-  const [result, setResult] = useState("");
+export function useDencrypt(): DencryptReturnType;
+export function useDencrypt(options: DencryptOptions): DencryptReturnType;
+export function useDencrypt(initialValue: string): DencryptReturnType;
+export function useDencrypt(
+  initialValue: string,
+  options: DencryptOptions
+): DencryptReturnType;
+export function useDencrypt(
+  v?: string | DencryptOptions,
+  o?: DencryptOptions
+): DencryptReturnType {
+  let initialValue = "";
+  let options;
+
+  if (typeof v === "object") {
+    options = v;
+  } else if (typeof v === "string") {
+    initialValue = v;
+    options = o;
+  }
+
+  const [value, setValue] = useState(initialValue);
+  const [result, setResult] = useState(initialValue);
 
   const { chars, interval } = { ...defaultOptions, ...options };
 
@@ -60,7 +87,7 @@ export const useDencrypt = (options?: Partial<typeof defaultOptions>) => {
     let i = 0;
 
     const crypting = setInterval(() => {
-      setResult(oldValue => {
+      setResult((oldValue) => {
         if (oldValue === value) {
           clearInterval(crypting);
 
@@ -84,8 +111,8 @@ export const useDencrypt = (options?: Partial<typeof defaultOptions>) => {
 
   return {
     result,
-    dencrypt: setValue
+    dencrypt: setValue,
   };
-};
+}
 
 export default useDencrypt;

@@ -1,11 +1,15 @@
-import { useEffect, useState, Dispatch, SetStateAction } from "react";
+import React from "react";
 
-type DencryptReturnType = {
-  result: string;
-  dencrypt: Dispatch<SetStateAction<string>>;
+type DencryptReturnType = [
+  string,
+  React.Dispatch<React.SetStateAction<string>>
+];
+
+type DencryptInitialOptions = {
+  initialValue?: string;
+  callback: (value: string) => void;
 };
-
-type DencryptOptions = Partial<typeof defaultOptions>;
+type DencryptDefaultOptions = Partial<typeof defaultOptions>;
 
 const getRandomChar = (chars: string[]) =>
   chars[Math.floor(Math.random() * chars.length)];
@@ -58,61 +62,105 @@ const defaultOptions = {
 };
 
 export function useDencrypt(): DencryptReturnType;
-export function useDencrypt(options: DencryptOptions): DencryptReturnType;
-export function useDencrypt(initialValue: string): DencryptReturnType;
 export function useDencrypt(
-  initialValue: string,
-  options: DencryptOptions
+  options: DencryptDefaultOptions
 ): DencryptReturnType;
 export function useDencrypt(
-  v?: string | DencryptOptions,
-  o?: DencryptOptions
-): DencryptReturnType {
+  initialValue: Required<DencryptInitialOptions["initialValue"]>
+): DencryptReturnType;
+export function useDencrypt(
+  initialValue: Required<DencryptInitialOptions["initialValue"]>,
+  options: DencryptDefaultOptions
+): DencryptReturnType;
+export function useDencrypt(
+  v?: string | DencryptDefaultOptions,
+  o?: DencryptDefaultOptions
+) {
   let initialValue = "";
-  let options;
+  let options: DencryptDefaultOptions = {};
 
   if (typeof v === "object") {
     options = v;
-  } else if (typeof v === "string") {
+  } else if (typeof v === "string" && typeof o === "object") {
     initialValue = v;
     options = o;
   }
 
-  const [value, setValue] = useState(initialValue);
-  const [result, setResult] = useState(initialValue);
+  const [result, setResult] = React.useState<string>();
+  const [setValue, setSetValue] = React.useState<ReturnType<typeof dencrypt>>();
 
-  const { chars, interval } = { ...defaultOptions, ...options };
+  React.useEffect(() => {
+    const setValue = dencrypt({
+      ...options,
+      initialValue,
+      callback: setResult,
+    });
 
-  useEffect(() => {
-    let i = 0;
+    setSetValue(() => setValue);
+  }, []);
 
-    const crypting = setInterval(() => {
-      setResult((oldValue) => {
-        if (oldValue === value) {
-          clearInterval(crypting);
-
-          return value;
-        }
-
-        const oldLength = oldValue ? oldValue.length : 0;
-        const newLength = value.length;
-        const maxLength = Math.max(oldLength, newLength);
-
-        return [...new Array(maxLength)]
-          .map((_, j) => getChar(i, j, maxLength, oldValue, value, chars))
-          .join("");
-      });
-
-      i++;
-    }, interval);
-
-    return () => clearInterval(crypting);
-  }, [value, chars, interval]);
-
-  return {
-    result,
-    dencrypt: setValue,
-  };
+  return [result, setValue];
 }
 
 export default useDencrypt;
+
+export const dencrypt = (
+  options: DencryptInitialOptions & DencryptDefaultOptions
+) => {
+  const { chars, interval, callback, initialValue } = {
+    ...defaultOptions,
+    ...options,
+  };
+
+  let lastValue: string;
+  let isCrypting: NodeJS.Timeout;
+
+  if (initialValue) {
+    lastValue = initialValue;
+    callback(lastValue);
+  }
+
+  function* calculateValues(nextValue: string, prevValue = "") {
+    const nextLength = nextValue.length;
+    const prevLength = prevValue.length;
+    const maxLength = Math.max(nextLength, prevLength);
+    const iterations = 2 * maxLength;
+
+    let i = 0;
+
+    yield prevValue;
+
+    while (i < iterations) {
+      yield [...new Array(maxLength)]
+        .map((_, j) => getChar(i, j, maxLength, prevValue, nextValue, chars))
+        .join("");
+
+      i++;
+    }
+
+    yield nextValue;
+  }
+
+  const setValue = (value: string, finished?: () => void) => {
+    clearInterval(isCrypting);
+
+    const values = calculateValues(value, lastValue);
+
+    isCrypting = setInterval(() => {
+      var next = values.next();
+
+      if (next.done) {
+        clearInterval(isCrypting);
+
+        if (finished) {
+          finished();
+        }
+      } else {
+        lastValue = next.value;
+        callback(lastValue);
+      }
+    }, interval);
+  };
+
+  return setValue;
+};

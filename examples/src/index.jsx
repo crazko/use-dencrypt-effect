@@ -6,9 +6,11 @@ import { Initial } from "./initial";
 
 const App = () => (
   <div>
-    <div>{/* <Words /> */}</div>
     <div>
       <Initial />
+    </div>
+    <div>
+      <Words />
     </div>
   </div>
 );

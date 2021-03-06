@@ -2,14 +2,18 @@ import React from "react";
 import { useDencrypt } from "use-dencrypt-effect";
 
 export const Initial = () => {
-  const { result, dencrypt } = useDencrypt("Roman");
+  const [result, setResult] = useDencrypt("bukacaka", {
+    chars: ["-"],
+  });
 
   return (
-    <h1
-      onMouseOver={() => dencrypt("Roman ")}
-      onMouseOut={() => dencrypt("Roman")}
-    >
-      {result}
-    </h1>
+    <div>
+      <h1
+        style={{ fontFamily: "monospace" }}
+        onMouseOver={() => setResult("dencrypt")}
+      >
+        {result}
+      </h1>
+    </div>
   );
 };

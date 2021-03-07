@@ -34,35 +34,35 @@ const Example = () => {
 
 ## API
 
-### `useDencrypt(initialValue?, options?)`
+### useDencrypt(initialValue?, options?)
 
 Returns a tuple `[value, setValue]` consisting of an actual value and a method to set a new value. Just like `useState()` hook.
 
-#### `value`
+#### value
 
 Type: `string`
 
 Result of the animation.
 
-#### `setValue(newValue)`
+#### setValue(newValue)
 
 Sets a value and starts new animation.
 
 Returns a promise which is resolved when animation for `newValue` ends.
 
-##### `newValue`
+##### newValue
 
 Type: `string`
 
 A value used for next animation.
 
-#### `initialValue`
+#### initialValue
 
 Type: `string`
 
 Optional value that is returned immediately.
 
-#### `options`
+#### options
 
 Type: `Object`
 

@@ -25,58 +25,79 @@ import * as React from "react";
 
 import { useDencrypt } from "use-dencrypt-effect";
 
-const values = ["useDencrypt", "Customizable", "React Hook", "Text Effect"];
-
 const Example = () => {
-  const { result, dencrypt } = useDencrypt();
+  const [value, setValue] = useDencrypt("initialValue");
 
-  React.useEffect(() => {
-    let i = 0;
-
-    const action = setInterval(() => {
-      dencrypt(values[i]);
-
-      i = i === values.length - 1 ? 0 : i + 1;
-    }, 2000);
-
-    return () => clearInterval(action);
-  }, []);
-
-  return <div>{result}</div>;
+  return <div onClick={() => setValue("newValue")}>{value}</div>;
 };
 ```
 
-## Custom Options
+## API
 
-Type: `Object`.
+### `useDencrypt(initialValue?, options?)`
+
+Returns a tuple `[value, setValue]` consisting of an actual value and a method to set a new value. Just like `useState()` hook.
+
+#### `value`
+
+Type: `string`
+
+Result of the animation.
+
+#### `setValue(newValue)`
+
+Sets a value and starts new animation.
+
+Returns a promise which is resolved when animation for `newValue` ends.
+
+##### `newValue`
+
+Type: `string`
+
+A value used for next animation.
+
+#### `initialValue`
+
+Type: `string`
+
+Optional value that is returned immediately.
+
+#### `options`
+
+Type: `Object`
 
 All parameters are optional.
 
-### chars
+##### chars
 
-Type: `Array<string>`. Default: `["-", ".", "/", "^", "*", "!", "}", "<", "~", "$", "0", "1", "2", "3", "4", "5", "a", "b", "c", "d", "e", "f"];`
+Type: `string`\
+Default: `-./^*!}<~$012345abcdef`
 
-An array of characters used for the effect. Picked by random.
+Characters used for the effect. Picked by random.
 
-### interval
+##### interval
 
-Type: `number`. Default: `50`.
+Type: `number`\
+Default: `50`
 
 Number of miliseconds it takes for every animation step (one character).
 
-## Other Examples
+## Examples
+
+See [`./examples/src`](/examples/src) directory.
+
+- [Custom Characters](/examples/src/custom-characters.jsx)
+- [Initial Value](/examples/src/initial-value.jsx)
+- [Loop Through Values](/examples/src/loop.jsx)
+- [Use without React hook](/examples/src/without-hook.jsx)
 
 ### One character
 
 ![](https://github.com/crazko/use-dencrypt-effect/raw/master/docs/example1.gif)
 
 ```js
-const options = {
-  chars: ["_"]
-}
-
 const Example = () => {
-  const { result, dencrypt } = useDencrypt(options);
+  const [value, setValue] = useDencrypt({ chars: "_" });
 
   // ...
 ```

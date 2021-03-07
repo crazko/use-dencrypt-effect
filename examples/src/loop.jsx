@@ -1,22 +1,32 @@
 import React from "react";
 import { useDencrypt } from "use-dencrypt-effect";
 
-const values = ["useDencrypt", "Customizable", "React Hook", "Text Effect"];
+const values = ["useDencrypt", "Customizable", "React Hook", "Text Effect", ""];
 
 export const Loop = () => {
   const [result, setResult] = useDencrypt();
-  const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
+    let i = 0;
+    let run = true;
+
     const loop = async () => {
-      await setResult(values[value]);
-      setValue((i) => (i === values.length - 1 ? 0 : i + 1));
+      while (run) {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await setResult(values[i]);
+
+        i = i === values.length - 1 ? 0 : i + 1;
+      }
     };
 
     if (setResult) {
-      setTimeout(loop, 1000);
+      loop();
     }
-  }, [value, setResult]);
+
+    return () => {
+      run = false;
+    };
+  }, [setResult]);
 
   return (
     <div

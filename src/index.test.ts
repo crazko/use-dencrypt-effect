@@ -1,88 +1,89 @@
-import { useDencrypt } from "./";
 import { renderHook, act } from "@testing-library/react-hooks";
+import { useDencrypt } from "./";
 
-const options = { chars: ["."] };
+test("accepts initial value", () => {
+  const initialValue = "value";
 
-describe("useDencrypt", () => {
-  it("creates text effect", async () => {
-    const { result, waitForNextUpdate, rerender } = renderHook(() =>
-      useDencrypt(options)
-    );
+  const { result } = renderHook(() => useDencrypt(initialValue));
 
-    expect(result.current.result).toBe("");
-    expect(typeof result.current.dencrypt).toBe("function");
+  expect(result.current[0]).toBe(initialValue);
+});
 
-    act(() => {
-      result.current.dencrypt("foo");
-    });
+test("changes value with text effect", async () => {
+  const { result, waitForNextUpdate, rerender } = renderHook(() =>
+    useDencrypt({
+      chars: ".",
+    })
+  );
 
-    await waitForNextUpdate();
-    expect(result.current.result).toBe(".");
+  expect(result.current[0]).toBe(undefined);
 
-    rerender();
-    await waitForNextUpdate();
-
-    expect(result.current.result).toBe("..");
-
-    rerender();
-    await waitForNextUpdate();
-
-    expect(result.current.result).toBe("...");
-
-    rerender();
-    await waitForNextUpdate();
-
-    expect(result.current.result).toBe("f..");
-
-    rerender();
-    await waitForNextUpdate();
-
-    expect(result.current.result).toBe("fo.");
-
-    rerender();
-    await waitForNextUpdate();
-
-    expect(result.current.result).toBe("foo");
+  act(() => {
+    result.current[1]("foo");
   });
 
-  it("creates text effect with initial value", async () => {
-    const { result, waitForNextUpdate, rerender } = renderHook(() =>
-      useDencrypt("bar", options)
-    );
+  await waitForNextUpdate();
+  expect(result.current[0]).toBe("");
 
-    expect(result.current.result).toBe("bar");
-    expect(typeof result.current.dencrypt).toBe("function");
+  await waitForNextUpdate();
+  expect(result.current[0]).toBe(".");
 
-    act(() => {
-      result.current.dencrypt("foo");
-    });
+  rerender();
+  await waitForNextUpdate();
 
-    await waitForNextUpdate();
-    expect(result.current.result).toBe(".ar");
+  expect(result.current[0]).toBe("..");
 
-    rerender();
-    await waitForNextUpdate();
+  rerender();
+  await waitForNextUpdate();
 
-    expect(result.current.result).toBe("..r");
+  expect(result.current[0]).toBe("...");
 
-    rerender();
-    await waitForNextUpdate();
+  rerender();
+  await waitForNextUpdate();
 
-    expect(result.current.result).toBe("...");
+  expect(result.current[0]).toBe("f..");
 
-    rerender();
-    await waitForNextUpdate();
+  rerender();
+  await waitForNextUpdate();
 
-    expect(result.current.result).toBe("f..");
+  expect(result.current[0]).toBe("fo.");
 
-    rerender();
-    await waitForNextUpdate();
+  rerender();
+  await waitForNextUpdate();
 
-    expect(result.current.result).toBe("fo.");
+  expect(result.current[0]).toBe("foo");
 
-    rerender();
-    await waitForNextUpdate();
-
-    expect(result.current.result).toBe("foo");
+  act(() => {
+    result.current[1]("hi");
   });
+
+  rerender();
+  await waitForNextUpdate();
+
+  expect(result.current[0]).toBe(".oo");
+
+  rerender();
+  await waitForNextUpdate();
+
+  expect(result.current[0]).toBe("..o");
+
+  rerender();
+  await waitForNextUpdate();
+
+  expect(result.current[0]).toBe("...");
+
+  rerender();
+  await waitForNextUpdate();
+
+  expect(result.current[0]).toBe("h..");
+
+  rerender();
+  await waitForNextUpdate();
+
+  expect(result.current[0]).toBe("hi.");
+
+  rerender();
+  await waitForNextUpdate();
+
+  expect(result.current[0]).toBe("hi");
 });

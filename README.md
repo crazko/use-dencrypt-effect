@@ -6,7 +6,8 @@
 
 # use-dencrypt-effect
 
-[![NPM](https://img.shields.io/npm/v/use-dencrypt-effect.svg)](https://www.npmjs.com/package/use-dencrypt-effect)
+[![NPM](https://img.shields.io/npm/v/use-dencrypt-effect.svg)](https://www.npmjs.com/package/use-dencrypt-effect) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
+
 
 A custom [React hook](https://reactjs.org/docs/hooks-intro.html) generating crypting text effect.
 

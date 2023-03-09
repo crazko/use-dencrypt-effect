@@ -22,9 +22,8 @@
     "start": "rollup -c -w",
     "prepare": "npm run build"
   },
-  "dependencies": {},
   "peerDependencies": {
-    "react": "^16.9.0"
+    "react": "^16.9"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -35,14 +34,14 @@
     "@types/react": "^16.7.22",
     "cross-env": "^5.2.0",
     "react": "^16.9.0",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "react-test-renderer": "^16.9.0",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-typescript2": "^0.19.2",
+    "rollup-plugin-typescript2": "^0.34.1",
     "rollup-plugin-url": "^2.1.0",
     "typescript": "^3.2.4"
   }

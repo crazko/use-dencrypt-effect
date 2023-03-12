@@ -1,7 +1,11 @@
 import React from "react";
-import { useDencrypt } from "use-dencrypt-effect";
+import { useDencrypt } from "..";
 
-const Link = React.memo(({ children }) => {
+type LinkProps = {
+  children: string;
+};
+
+const Link = React.memo(({ children }: LinkProps) => {
   const [value, setValue] = useDencrypt(children);
 
   return (

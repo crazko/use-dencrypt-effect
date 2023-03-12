@@ -1,11 +1,12 @@
 import React from "react";
-import { dencrypt } from "use-dencrypt-effect";
+import { dencrypt } from "..";
 
 export const WithoutHook = () => {
-  const element = React.useRef();
+  const element = React.useRef<HTMLElement>(null);
+
   const setValue = dencrypt({
     callback: (value) => {
-      element.current.textContent = value;
+      element.current!.textContent = value;
     },
   });
 

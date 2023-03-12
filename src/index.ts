@@ -5,19 +5,20 @@ import {
   DencryptDefaultOptions,
 } from "./dencrypt";
 
-type DencryptReturnType = [string, ReturnType<typeof dencrypt>];
+type DencryptReturnType = ReturnType<typeof dencrypt>;
+type UseDencryptReturnType = [string, DencryptReturnType];
 
-export function useDencrypt(): DencryptReturnType;
+export function useDencrypt(): UseDencryptReturnType;
 export function useDencrypt(
   initialValue: Required<DencryptInitialOptions["initialValue"]>
-): DencryptReturnType;
+): UseDencryptReturnType;
 export function useDencrypt(
   options: DencryptDefaultOptions
-): DencryptReturnType;
+): UseDencryptReturnType;
 export function useDencrypt(
   initialValue: Required<DencryptInitialOptions["initialValue"]>,
   options: DencryptDefaultOptions
-): DencryptReturnType;
+): UseDencryptReturnType;
 export function useDencrypt(
   v?: string | DencryptDefaultOptions,
   o?: DencryptDefaultOptions
@@ -29,21 +30,17 @@ export function useDencrypt(
     options = v;
   } else if (typeof v === "string") {
     initialValue = v;
-    options = o ?? {};
+    options = o ? o : {};
   }
 
   const [result, setResult] = React.useState<string>();
-  const [setValue, setSetValue] = React.useState<ReturnType<typeof dencrypt>>();
-
-  React.useEffect(() => {
-    const setValue = dencrypt({
+  const [setValue, setSetValue] = React.useState(() =>
+    dencrypt({
       ...options,
       initialValue,
       callback: setResult,
-    });
-
-    setSetValue(() => setValue);
-  }, []);
+    })
+  );
 
   return [result, setValue];
 }

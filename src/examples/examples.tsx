@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 
 import { InitialValue } from "./initial-value";
 import { Loop } from "./loop";
@@ -23,6 +23,8 @@ const App = () => (
   </main>
 );
 
-if (typeof window !== "undefined") {
-  ReactDOM.render(<App />, document.getElementById("root"));
-}
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

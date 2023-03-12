@@ -1,4 +1,6 @@
 import { waitFor } from "@testing-library/dom";
+import { expect, test } from "vitest";
+
 import { dencrypt } from "./";
 
 test("accepts initial value", () => {
@@ -16,8 +18,6 @@ test("accepts initial value", () => {
 });
 
 test("changes value with text effect", async () => {
-  jest.useFakeTimers();
-
   let result = "";
 
   const setValue = dencrypt({

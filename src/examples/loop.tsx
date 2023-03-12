@@ -1,5 +1,5 @@
 import React from "react";
-import { useDencrypt } from "use-dencrypt-effect";
+import { useDencrypt } from "..";
 
 const values = ["useDencrypt", "Customizable", "React Hook", "Text Effect", ""];
 
@@ -19,9 +19,7 @@ export const Loop = () => {
       }
     };
 
-    if (setResult) {
-      loop();
-    }
+    loop();
 
     return () => {
       run = false;

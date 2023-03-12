@@ -1,4 +1,6 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+import { renderHook, act, waitFor } from "@testing-library/react";
+import { expect, test } from "vitest";
+
 import { useDencrypt } from "./";
 
 test("accepts initial value", () => {
@@ -10,7 +12,7 @@ test("accepts initial value", () => {
 });
 
 test("changes value with text effect", async () => {
-  const { result, waitForNextUpdate, rerender } = renderHook(() =>
+  const { result } = renderHook(() =>
     useDencrypt({
       chars: ".",
     })
@@ -22,68 +24,22 @@ test("changes value with text effect", async () => {
     result.current[1]("foo");
   });
 
-  await waitForNextUpdate();
-  expect(result.current[0]).toBe("");
-
-  await waitForNextUpdate();
-  expect(result.current[0]).toBe(".");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("..");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("...");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("f..");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("fo.");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("foo");
+  await waitFor(() => expect(result.current[0]).toBe(""));
+  await waitFor(() => expect(result.current[0]).toBe("."));
+  await waitFor(() => expect(result.current[0]).toBe(".."));
+  await waitFor(() => expect(result.current[0]).toBe("..."));
+  await waitFor(() => expect(result.current[0]).toBe("f.."));
+  await waitFor(() => expect(result.current[0]).toBe("fo."));
+  await waitFor(() => expect(result.current[0]).toBe("foo"));
 
   act(() => {
     result.current[1]("hi");
   });
 
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe(".oo");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("..o");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("...");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("h..");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("hi.");
-
-  rerender();
-  await waitForNextUpdate();
-
-  expect(result.current[0]).toBe("hi");
+  await waitFor(() => expect(result.current[0]).toBe(".oo"));
+  await waitFor(() => expect(result.current[0]).toBe("..o"));
+  await waitFor(() => expect(result.current[0]).toBe("..."));
+  await waitFor(() => expect(result.current[0]).toBe("h.."));
+  await waitFor(() => expect(result.current[0]).toBe("hi."));
+  await waitFor(() => expect(result.current[0]).toBe("hi"));
 });

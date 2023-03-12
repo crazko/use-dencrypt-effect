@@ -40,7 +40,7 @@ export const dencrypt = (
   };
 
   let lastValue: string;
-  let isCrypting: NodeJS.Timeout;
+  let isCrypting: ReturnType<typeof setInterval>;
 
   if (initialValue) {
     lastValue = initialValue;
@@ -72,7 +72,7 @@ export const dencrypt = (
     clearInterval(isCrypting);
     const values = calculateValues(value, lastValue);
 
-    return new Promise((resolve) => {
+    return new Promise<string>((resolve) => {
       isCrypting = setInterval(() => {
         var next = values.next();
 

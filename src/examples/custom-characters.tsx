@@ -1,5 +1,5 @@
 import React from "react";
-import { useDencrypt } from "use-dencrypt-effect";
+import { useDencrypt } from "..";
 
 const value = "lorem ipsum";
 
@@ -16,9 +16,7 @@ export const CustomCharacters = () => {
       }
     };
 
-    if (setResult) {
-      loop();
-    }
+    loop();
 
     return () => {
       run = false;

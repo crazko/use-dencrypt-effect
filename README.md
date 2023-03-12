@@ -84,12 +84,12 @@ Number of miliseconds it takes for every animation step (one character).
 
 ## Examples
 
-See [`./examples/src`](/examples/src) directory.
+See [`./src/examples`](./src/examples) directory.
 
-- [Custom Characters](/examples/src/custom-characters.jsx)
-- [Initial Value](/examples/src/initial-value.jsx)
-- [Loop Through Values](/examples/src/loop.jsx)
-- [Use without React hook](/examples/src/without-hook.jsx)
+- [Custom Characters](./src/examples/custom-characters.tsx)
+- [Initial Value](./src/examples/initial-value.tsx)
+- [Loop Through Values](./src/examples/loop.tsx)
+- [Use without React hook](./src/examples/without-hook.tsx)
 
 ### One character
 
@@ -105,7 +105,3 @@ const Example = () => {
 ### Run effect on hover
 
 [Live Example](https://vojdivon.sk/) | [Source Code](https://github.com/ParalelnaPolisKE/vojdivon.sk/blob/ce04fb05212dce8323fef8fba73963544ce2eda7/src/pages/index.tsx#L69)
-
----
-
-This hook is created using [create-react-hook](https://github.com/Hermanya/create-react-hook).

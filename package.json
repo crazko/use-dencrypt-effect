@@ -1,6 +1,6 @@
 {
   "name": "use-dencrypt-effect",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0",
   "type": "module",
   "description": "A custom React hook generating crypting text effect.",
   "author": "crazko",

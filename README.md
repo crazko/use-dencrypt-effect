@@ -6,7 +6,7 @@
 
 # use-dencrypt-effect
 
-[![NPM](https://img.shields.io/npm/v/use-dencrypt-effect.svg)](https://www.npmjs.com/package/use-dencrypt-effect) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
+[![NPM](https://img.shields.io/npm/v/use-dencrypt-effect.svg)](https://www.npmjs.com/package/use-dencrypt-effect)
 
 
 A custom [React hook](https://reactjs.org/docs/hooks-intro.html) generating crypting text effect.
@@ -105,4 +105,4 @@ const Example = () => {
 
 ### Run effect on hover
 
-[Live Example](https://vojdivon.sk/) | [Source Code](https://github.com/ParalelnaPolisKE/vojdivon.sk/blob/ce04fb05212dce8323fef8fba73963544ce2eda7/src/pages/index.tsx#L69)
+[Live Example](https://vojdivon.sk/) | [Source Code](https://github.com/ParalelnaPolisKE/vojdivon.sk/blob/54fcbf5c573de485b5d6ed2051d515da7f0bf252/src/index.jsx#L43)
